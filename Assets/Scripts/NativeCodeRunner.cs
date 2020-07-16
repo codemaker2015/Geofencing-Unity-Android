@@ -25,6 +25,7 @@ public class NativeCodeRunner : MonoBehaviour
 		parameters[0] = unityActivity;
 //		//parameters[1] = "Hello World!";
 
+
 		// Call PrintString in bridge, with our parameters.
 		alert.Call("startLocation", parameters);
 	}
