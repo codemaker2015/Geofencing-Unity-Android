@@ -3,11 +3,14 @@
 buildscript {
     repositories {
         google()
+        maven {
+            url 'https://dl.google.com/dl/android/maven2'
+        }
         jcenter()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.0'
+         classpath 'com.android.tools.build:gradle:4.+'
 **BUILD_SCRIPT_DEPS**}
 }
 
@@ -21,12 +24,21 @@ allprojects {
     }
 }
 
-apply plugin: 'com.android.application'
+apply plugin: 'maven'
+
 **APPLY_PLUGINS**
 
 dependencies {
-    compile 'com.google.android.gms:play-services-location:11.4.2'
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    repositories {
+        google()
+        maven {
+            url 'https://dl.google.com/dl/android/maven2'
+        }
+        jcenter()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+    }
+  
+    classpath fileTree(dir: 'libs', include: ['*.jar'])
 **DEPS**}
 
 android {
