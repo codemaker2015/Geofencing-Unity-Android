@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class NativeCodeRunner : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class NativeCodeRunner : MonoBehaviour
 
 		// Retrieve the "Bridge" from our native plugin.
 		// ! Notice we define the complete package name.              
-		AndroidJavaObject alert = new AndroidJavaObject("io.nlopez.smartlocation.SmartLocationImpl");
+		AndroidJavaObject androidActivity = new AndroidJavaObject("io.nlopez.smartlocation.SmartLocationImpl");
 
 		// Setup the parameters we want to send to our native plugin.              
 		object[] parameters = new object[1];
@@ -27,6 +28,17 @@ public class NativeCodeRunner : MonoBehaviour
 
 
 		// Call PrintString in bridge, with our parameters.
-		alert.Call("startLocation", parameters);
+		androidActivity.Call("startLocation", parameters);
+
+		StartCoroutine(Delay(5,()=>{
+			string[] response = androidActivity.Call<string[]>("stopLocation", parameters);
+			Debug.Log("Response: " + response[0]);
+		}));
+
+	}
+
+	IEnumerator Delay(int sec, Action callback){
+		yield return new WaitForSeconds(sec);
+		callback.Invoke();
 	}
 }
